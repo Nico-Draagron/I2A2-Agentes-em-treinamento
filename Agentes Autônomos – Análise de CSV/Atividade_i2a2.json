@@ -1,0 +1,472 @@
+{
+  "name": "Atividade_i2a2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        580,
+        -140
+      ],
+      "id": "0c83ea66-e404-45a4-a50f-3de8fdeb6529",
+      "name": "When chat message received",
+      "webhookId": "5d401fa1-a721-4b99-8f80-44ac41625a7a"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1PghdhK82h20Y1iWtbkd3MuB-UuDWnu02",
+          "mode": "list",
+          "cachedResultName": "202401_NFs_Itens.csv",
+          "cachedResultUrl": "https://drive.google.com/file/d/1PghdhK82h20Y1iWtbkd3MuB-UuDWnu02/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        800,
+        -280
+      ],
+      "id": "dbe3de29-930f-4303-a657-82938faa2ccc",
+      "name": "Google Drive"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1Kf8xNKGeZGsKxmeksiYnq7z66OK3yInF",
+          "mode": "list",
+          "cachedResultName": "202401_NFs_Cabecalho.csv",
+          "cachedResultUrl": "https://drive.google.com/file/d/1Kf8xNKGeZGsKxmeksiYnq7z66OK3yInF/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        800,
+        0
+      ],
+      "id": "b09a3fb9-c471-4f81-bb5a-2683c593f86a",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "LierpcwD8poqwudW",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        980,
+        -280
+      ],
+      "id": "516a0ff5-3856-4bc3-8655-c22ad38deee4",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        980,
+        0
+      ],
+      "id": "d82e18b0-490d-405c-99b6-ac59385188d9",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "['CHAVE DE ACESSO']",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1360,
+        -140
+      ],
+      "id": "dc1d8d05-8157-499b-b023-4d20270e8c85",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": {
+          "__rl": true,
+          "value": "notas_fiscais",
+          "mode": "list",
+          "cachedResultName": "notas_fiscais"
+        },
+        "dataMode": "defineBelow",
+        "columnToMatchOn": "chave_acesso",
+        "valueToMatchOn": "={{  $json['CHAVE DE ACESSO'] }}",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "=modelo",
+              "value": "={{  $json['MODELO'] }}"
+            },
+            {
+              "column": "serie",
+              "value": "={{  $json['SÉRIE'] }}"
+            },
+            {
+              "column": "numero",
+              "value": "={{  $json['NÚMERO'] }}"
+            },
+            {
+              "column": "natureza_operacao",
+              "value": "={{  $json['NATUREZA DA OPERAÇÃO'] }}"
+            },
+            {
+              "column": "data_emissao",
+              "value": "={{  $json['DATA EMISSÃO'] }}"
+            },
+            {
+              "column": "cpf_cnpj_emitente",
+              "value": "={{  $json['CPF/CNPJ Emitente'] }}"
+            },
+            {
+              "column": "razao_social_emitente",
+              "value": "={{  $json['RAZÃO SOCIAL EMITENTE'] }}"
+            },
+            {
+              "column": "inscricao_extadual",
+              "value": "={{  $json['INSCRIÇÃO ESTADUAL EMITENTE'] }}"
+            },
+            {
+              "column": "uf_emitente",
+              "value": "={{  $json['UF EMITENTE'] }}"
+            },
+            {
+              "column": "municipio_emitente",
+              "value": "={{  $json['MUNICÍPIO EMITENTE'] }}"
+            },
+            {
+              "column": "cnpj_destinatario",
+              "value": "={{  $json['CNPJ DESTINATÁRIO'] }}"
+            },
+            {
+              "column": "nome_destinatario",
+              "value": "={{  $json['NOME DESTINATÁRIO'] }}"
+            },
+            {
+              "column": "uf_destinatario",
+              "value": "={{  $json['UF DESTINTÁRIO'] }}"
+            },
+            {
+              "column": "indicador_ie_destinatario",
+              "value": "={{  $json['INDICADOR IE DESTINATÁRIO'] }}"
+            },
+            {
+              "column": "destino_operacao",
+              "value": "={{  $json['DESTINO DA OPERAÇÃO'] }}"
+            },
+            {
+              "column": "consumidor_final",
+              "value": "={{  $json['CONSUMIDOR FINAL'] }}"
+            },
+            {
+              "column": "presenca_comprador",
+              "value": "={{  $json['PRESENÇA DO COMPRADOR'] }}"
+            },
+            {
+              "column": "numero_produto",
+              "value": "={{  $json['NÚMERO PRODUTO'] }}"
+            },
+            {
+              "column": "descricao_produto",
+              "value": "={{  $json['DESCRIÇÃO DO PRODUTO/SERVIÇO'] }}"
+            },
+            {
+              "column": "codigo_ncm",
+              "value": "={{  $json['CÓDIGO NCM/SH'] }}"
+            },
+            {
+              "column": "cfop",
+              "value": "={{  $json['CFOP'] }}"
+            },
+            {
+              "column": "quantidade",
+              "value": "={{  $json['QUANTIDADE'] }}"
+            },
+            {
+              "column": "unidade",
+              "value": "={{  $json['UNIDADE'] }}"
+            },
+            {
+              "column": "valor_unitario",
+              "value": "={{  $json['VALOR UNITÁRIO'] }}"
+            },
+            {
+              "column": "valor_total",
+              "value": "={{  $json['VALOR TOTAL'] }}"
+            },
+            {
+              "column": "evento_mais_recente",
+              "value": "={{  $json['EVENTO MAIS RECENTE'] }}"
+            },
+            {
+              "column": "data_evento_mais_recente",
+              "value": "={{  $json['DATA/HORA EVENTO MAIS RECENTE '] }}"
+            },
+            {
+              "column": "valor_nota_fiscal",
+              "value": "={{  $json['VALOR NOTA FISCAL'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1580,
+        -160
+      ],
+      "id": "7fe636bf-ca09-4e2e-bbcd-bdd47cd25206",
+      "name": "MySQL"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an SQL assistant specialized in MySQL. Your task is to convert questions written in Portuguese, asked by the user, into valid and efficient SQL commands that query or manipulate the table named \"notas_fiscais\".\n\n### Table column names:\nid,\ncfop,\nchave_acesso,\ncnpj_destinatario,\ncodigo_ncm,\nconsumidor_final,\ncpf_cnpj_emitente,\ndata_emissao,\ndata_evento_mais_recente,\ndescricao_produto,\ndestino_operacao,\nevento_mais_recente,\nindicador_ie_destinatario,\ninscricao_extadual,\nmodelo,\nmunicipio_emitente,\nnatureza_operacao,\nnome_destinatario,\nnumero,\nnumero_produto,\npresenca_comprador,\nquantidade,\nrazao_social_emitente,\nserie,\ntipo_produto,\nuf_destinatario,\nuf_emitente,\nunidade,\nvalor_nota_fiscal,\nvalor_total,\nvalor_unitario\n\n### Semantic interpretation rules:\n- Expressions like \"nota fiscal\", \"nota\" or \"nf\" refer to the column \"chave_acesso\".\n- Questions about value, price or total refer to: valor_total, valor_unitario, or valor_nota_fiscal.\n- Questions about date refer to: data_emissao or data_evento_mais_recente.\n- Questions about the recipient refer to: nome_destinatario, uf_destinatario, or cnpj_destinatario.\n\n### Mandatory output rules:\n- Return **only the final SQL query**, with no explanations.\n- Do not include comments or markdown.\n- The answer must be **pure MySQL query**, ready for execution.\n- Use the question provided in: {{ $json.chatInput }}\n",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        740,
+        400
+      ],
+      "id": "a5c71b19-0fa0-4680-a3f8-a63e20831f28",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "mistral:latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        760,
+        620
+      ],
+      "id": "d3c31895-73ff-4476-a517-05e92064b001",
+      "name": "Ollama Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "mL07gmFbQQNdDbkR",
+          "name": "Ollama account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1160,
+        400
+      ],
+      "id": "e655cefd-bc46-423d-9e08-3730179ddced",
+      "name": "MySQL1",
+      "credentials": {
+        "mySql": {
+          "id": "C7eC9rxTNV86sZh0",
+          "name": "MySQL account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um assistente especializado em **comunicação clara e natural com usuários para análise de dados**.\n\n### Sua tarefa:\nGerar uma **resposta textual objetiva, amigável e direta**, respondendo à pergunta do usuário.\n\n---\n\n### Contexto:\n- **Pergunta do usuário:** {{ $('When chat message received').item.json.chatInput }}\n- **Resultado da consulta (formato JSON):** {{ JSON.stringify($json) }}\n\n---\n\n### Regras para a resposta:\n\n- Responda **diretamente à pergunta do usuário**, utilizando **somente os dados fornecidos no resultado da consulta (JSON)**.\n- **Não invente informações** e **não faça suposições** fora do que está nos dados.\n- Sua resposta deve ser **curta, clara e precisa**, com **linguagem objetiva e natural**, sem termos técnicos desnecessários.\n- Caso os dados contenham **números, nomes ou datas**, apresente-os de forma clara e compreensível para o usuário.\n- **Não retorne o JSON bruto**, apenas a **resposta final em texto simples**.\n",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        1440,
+        380
+      ],
+      "id": "56ccd3cf-c116-4423-9450-95e3c1cb0d60",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "model": "mistral:latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        620
+      ],
+      "id": "c966aca9-2f1e-483d-b94b-5f7824e898b1",
+      "name": "Ollama Model1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "mL07gmFbQQNdDbkR",
+          "name": "Ollama account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "MySQL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "45d2b297-b0c6-44d1-a9a8-25eaf916070d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6eeb69ff1538bf4a595b33c2449e24f05e9f2382236017f3a39cc78be4de3320"
+  },
+  "id": "qVABLhICYDSlOFuo",
+  "tags": []
+}
